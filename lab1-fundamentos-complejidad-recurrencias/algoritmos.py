@@ -48,7 +48,14 @@ def merge_sort(datos: list[int]) -> tuple[list[int], int]:
 
 
 def _ordenar_por_mezcla(datos: list[int]) -> tuple[list[int], int]:
-    """Divide una lista, ordena sus mitades y contabiliza comparaciones."""
+    """Divide una lista, ordena sus mitades y contabiliza comparaciones.
+
+    Args:
+        datos: lista que se dividirá y ordenará de forma recursiva.
+
+    Returns:
+        Lista descendente y total de comparaciones entre sus elementos.
+    """
     if len(datos) <= 1:
         return datos.copy(), 0
 
@@ -68,7 +75,15 @@ def _ordenar_por_mezcla(datos: list[int]) -> tuple[list[int], int]:
 def _mezclar(
     izquierda: list[int], derecha: list[int]
 ) -> tuple[list[int], int]:
-    """Combina dos listas descendentes y cuenta comparaciones de elementos."""
+    """Combina dos listas descendentes y cuenta comparaciones de elementos.
+
+    Args:
+        izquierda: primera mitad ordenada de forma descendente.
+        derecha: segunda mitad ordenada de forma descendente.
+
+    Returns:
+        Lista combinada y comparaciones hechas durante la mezcla.
+    """
     resultado = []
     indice_izquierdo = 0
     indice_derecho = 0

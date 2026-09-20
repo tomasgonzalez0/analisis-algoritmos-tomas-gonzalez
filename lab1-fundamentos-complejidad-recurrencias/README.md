@@ -126,7 +126,7 @@ Comparaciones entre elementos:
 
 | Tamaño | A: aleatorio | B: casi ordenado | C: inverso |
 |---:|---:|---:|---:|
-| 100 | 2.542 | 99 | 4.950 |
+| 100 | 2.542 | 100 | 4.950 |
 | 200 | 9.970 | 201 | 19.900 |
 | 400 | 40.436 | 409 | 79.800 |
 | 800 | 160.484 | 852 | 319.600 |
@@ -140,28 +140,28 @@ Tiempo mediano en milisegundos:
 
 | Tamaño | A: aleatorio | B: casi ordenado | C: inverso |
 |---:|---:|---:|---:|
-| 100 | 0,2607 | 0,0122 | 0,5187 |
-| 200 | 0,6434 | 0,0135 | 1,1759 |
-| 400 | 2,4907 | 0,0426 | 5,0540 |
-| 800 | 20,0814 | 0,0663 | 20,1729 |
-| 1600 | 43,3196 | 0,1433 | 82,5700 |
-| 3200 | 172,0780 | 0,3270 | 335,5795 |
-| 6400 | 686,6734 | 0,8218 | 1.362,2286 |
+| 100 | 0,1523 | 0,0068 | 0,2981 |
+| 200 | 0,6014 | 0,0134 | 1,1896 |
+| 400 | 2,5021 | 0,0299 | 4,8720 |
+| 800 | 10,7969 | 0,0656 | 20,4138 |
+| 1600 | 42,7299 | 0,1444 | 83,4178 |
+| 3200 | 167,8848 | 0,3293 | 340,8920 |
+| 6400 | 686,0788 | 0,8068 | 1.357,0321 |
 
 ![Tiempo de insertion sort](graficas/parte3_tiempo.png)
 
 ### Contraste con la predicción
 
 El escenario C fue el peor: con 6400 registros alcanzó 20.476.800
-comparaciones y 1.362,2286 ms. Corresponde exactamente a
+comparaciones y 1.357,0321 ms. Corresponde exactamente a
 `n(n - 1) / 2`, porque cada elemento nuevo debe atravesar toda la parte ya
-procesada. El escenario B fue el mejor, con 10.649 comparaciones y 0,8218 ms
+procesada. El escenario B fue el mejor, con 10.649 comparaciones y 0,8068 ms
 para el mismo tamaño; su prefijo descendente casi no requiere movimientos y el
 trabajo adicional se concentra en la cola del 2 %.
 
 El escenario A quedó entre ambos y se aproxima al caso promedio. En `n=6400`
 realizó 10.276.753 comparaciones, cerca de la mitad del escenario C, y tardó
-686,6734 ms. La clasificación observada coincide con la predicción previa: B
+686,0788 ms. La clasificación observada coincide con la predicción previa: B
 se acerca al mejor caso, A al promedio y C representa el peor caso para el
 orden descendente elegido.
 
@@ -267,13 +267,13 @@ la mediana de `time.perf_counter()`, midiendo solo el ordenamiento.
 
 | Tamaño | Insertion sort (ms) | Merge sort (ms) |
 |---:|---:|---:|
-| 100 | 0,1500 | 0,0987 |
-| 200 | 0,6018 | 0,2023 |
-| 400 | 2,5866 | 0,4683 |
-| 800 | 10,2765 | 1,0677 |
-| 1600 | 43,0312 | 2,1515 |
-| 3200 | 166,5038 | 4,6276 |
-| 6400 | 691,4575 | 10,2245 |
+| 100 | 0,2691 | 0,1652 |
+| 200 | 0,6932 | 0,1985 |
+| 400 | 2,5596 | 0,5880 |
+| 800 | 10,4194 | 1,0228 |
+| 1600 | 42,2188 | 2,1435 |
+| 3200 | 172,3186 | 4,5345 |
+| 6400 | 699,4981 | 10,0719 |
 
 ![Tiempo de insertion sort y merge sort](graficas/parte4_tiempo.png)
 
@@ -282,8 +282,8 @@ duplica, su tiempo tiende a acercarse a cuatro veces el anterior, como se
 espera de `Θ(n²)`. Merge sort crece con mucha más suavidad, de acuerdo con
 `Θ(n log n)`. En 100 registros los tiempos todavía están cercanos porque merge
 sort paga llamadas recursivas y creación de listas, aunque en esta ejecución ya
-fue más rápido. En 6400 registros, insertion sort necesitó 691,4575 ms y merge
-sort 10,2245 ms, una ventaja aproximada de 67,6 veces para merge sort. La forma
+fue más rápido. En 6400 registros, insertion sort necesitó 699,4981 ms y merge
+sort 10,0719 ms, una ventaja aproximada de 69,5 veces para merge sort. La forma
 de ambas curvas coincide con las cotas calculadas y muestra que merge sort
 escala mejor para Tamiza.
 
@@ -291,20 +291,20 @@ escala mejor para Tamiza.
 
 La extrapolación parte de la medición aleatoria de `n0 = 6400`, la mayor del
 experimento. No se ejecutaron 1.200.000 registros. Para insertion sort se usó
-el modelo cuadrático y su tiempo real `t0 = 0,6914575 s`:
+el modelo cuadrático y su tiempo real `t0 = 0,6994981 s`:
 
 ```text
-t = 0,6914575 * (1.200.000 / 6.400)^2
-t = 24.309,0527 s = 405,1509 min = 6,7525 h
+t = 0,6994981 * (1.200.000 / 6.400)^2
+t = 24.591,7301 s = 409,8622 min = 6,8310 h
 ```
 
-Para merge sort se usó su tiempo real `t0 = 0,0102245 s` y el crecimiento
+Para merge sort se usó su tiempo real `t0 = 0,0100719 s` y el crecimiento
 `n log2(n)`:
 
 ```text
-t = 0,0102245 *
+t = 0,0100719 *
     (1.200.000 * log2(1.200.000)) / (6.400 * log2(6.400))
-t = 3,0620 s = 0,0510 min
+t = 3,0163 s = 0,0503 min
 ```
 
 Estas cifras son **estimaciones**, no mediciones directas. Suponen que las
@@ -315,5 +315,53 @@ la ventana de cuatro horas, mientras merge sort queda ampliamente por debajo.
 
 ### Concepto técnico para la Secretaría de Salud
 
-El concepto final se presenta después de consolidar la revisión técnica del
-informe.
+Al equipo de ingeniería de la Secretaría de Salud le recomiendo reemplazar
+insertion sort por merge sort como único algoritmo de ordenamiento de Tamiza.
+La decisión no depende de que insertion sort sea incorrecto. Ambos producen la
+lista descendente requerida, pero sus márgenes ante el crecimiento y los
+cambios del canal de entrada son muy distintos.
+
+En la medición aleatoria con 6400 registros, insertion sort tardó 699,4981 ms
+y realizó 10.276.753 comparaciones. Merge sort recibió el mismo lote, tardó
+10,0719 ms y realizó 72.967 comparaciones. En ese punto merge sort fue unas
+69,5 veces más rápido. La diferencia también aumentó con el tamaño: al duplicar
+la entrada, la curva de insertion sort tendió a multiplicar el tiempo por
+cuatro, mientras la de merge sort creció de forma cercana a `n log n`. Esta
+evidencia coincide con `Θ(n²)` frente a `Θ(n log n)`.
+
+Para aproximar el lote real se tomó la mayor medición, `n0 = 6400`. El modelo
+cuadrático estima para insertion sort `0,6994981 * (1.200.000 / 6.400)²`, que
+equivale a 24.591,7301 segundos o 6,8310 horas. Para merge sort se escaló el
+tiempo de 0,0100719 segundos mediante la razón entre
+`1.200.000 log2(1.200.000)` y `6.400 log2(6.400)`, con un resultado de 3,0163
+segundos. Son estimaciones, no mediciones directas. Excluyen carga de datos,
+escritura de la lista, competencia por CPU y cambios de plataforma, por lo que
+deben validarse después con una prueba de integración representativa. Aun con
+esa limitación, insertion sort rebasa las cuatro horas y merge sort conserva un
+margen mucho mayor.
+
+No recomiendo aprobar la compra del servidor como solución del problema. Bajo
+el supuesto ideal de reducir exactamente a la mitad el tiempo, la estimación
+aleatoria de insertion sort bajaría a 3,4155 horas, dejando cerca de 35 minutos
+para el resto del proceso y cualquier variación. Además, el canal puede cambiar
+sin aviso. En el escenario C, insertion sort ya tardó 1.357,0321 ms para 6400
+registros; la extrapolación cuadrática da 13,2523 horas y aun un servidor dos
+veces más rápido dejaría cerca de 6,6261 horas. El hardware reduce una
+constante, pero no elimina el crecimiento cuadrático ni ofrece la garantía
+requerida.
+
+Insertion sort sí mostró una ventaja especial cuando el lote estaba 98 %
+ordenado: solo tardó 0,8068 ms en 6400 registros. Sin embargo, escogerlo por ese
+caso obligaría a confiar en que el reproceso conservará siempre esa forma o a
+mantener varias rutas de ordenamiento. Como el equipo quiere una sola
+implementación y el origen puede ser aleatorio, casi ordenado o inverso, merge
+sort ofrece el comportamiento más predecible.
+
+El cambio tiene costos que deben registrarse. Esta implementación de merge sort
+crea listas auxiliares y usa más memoria que insertion sort. A cambio, mantiene
+`Θ(n log n)` en todos los casos y es estable: ante riesgos iguales toma primero
+el elemento de la mitad izquierda, conservando su orden relativo. Esa propiedad
+ayuda a no alterar arbitrariamente prioridades equivalentes. Recomiendo probar
+el consumo de memoria con datos cercanos a producción, conservar pruebas de
+orden descendente y estabilidad, y desplegar merge sort con monitoreo del
+tiempo total del proceso nocturno.

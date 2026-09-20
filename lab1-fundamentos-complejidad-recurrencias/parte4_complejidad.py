@@ -21,7 +21,15 @@ Algoritmo = Callable[[list[int]], tuple[list[int], int]]
 def medir_algoritmo(
     algoritmo: Algoritmo, datos: list[int]
 ) -> tuple[float, int, list[int]]:
-    """Mide un algoritmo y retorna tiempo mediano, comparaciones y resultado."""
+    """Mide un algoritmo y retorna tiempo, comparaciones y resultado.
+
+    Args:
+        algoritmo: función de ordenamiento instrumentada que se medirá.
+        datos: lote que recibirá el algoritmo en cada repetición.
+
+    Returns:
+        Tiempo mediano, comparaciones y lista ordenada.
+    """
     tiempos = []
     comparaciones = 0
     resultado = []
@@ -43,7 +51,11 @@ def medir_algoritmo(
 
 
 def ejecutar_experimento() -> list[tuple[int, float, float, int, int]]:
-    """Compara ambos algoritmos usando un mismo lote por tamaño."""
+    """Compara ambos algoritmos usando un mismo lote por tamaño.
+
+    Returns:
+        Mediciones de tiempo y comparaciones para cada tamaño.
+    """
     resultados = []
 
     for tamano in TAMANOS:
@@ -76,7 +88,11 @@ def ejecutar_experimento() -> list[tuple[int, float, float, int, int]]:
 
 
 def graficar(resultados: list[tuple[int, float, float, int, int]]) -> None:
-    """Genera la gráfica comparativa de tiempo de la Parte 4."""
+    """Genera la gráfica comparativa de tiempo de la Parte 4.
+
+    Args:
+        resultados: mediciones obtenidas para ambos algoritmos.
+    """
     carpeta = Path(__file__).resolve().parent / "graficas"
     carpeta.mkdir(exist_ok=True)
 
@@ -100,7 +116,11 @@ def graficar(resultados: list[tuple[int, float, float, int, int]]) -> None:
 def mostrar_resultados(
     resultados: list[tuple[int, float, float, int, int]],
 ) -> None:
-    """Muestra las mediciones comparativas en la terminal."""
+    """Muestra las mediciones comparativas en la terminal.
+
+    Args:
+        resultados: mediciones obtenidas para ambos algoritmos.
+    """
     print("tamaño;insertion_ms;merge_ms;comp_insertion;comp_merge")
     for resultado in resultados:
         tamano, tiempo_insertion, tiempo_merge, comp_insertion, comp_merge = (

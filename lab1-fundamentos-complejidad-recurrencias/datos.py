@@ -42,6 +42,15 @@ def generar_casi_ordenado(n: int, semilla: int = 42) -> list[int]:
     parte_ordenada = list(range(n - 1, limite_cola - 1, -1))
     parte_desordenada = list(range(limite_cola))
     random.Random(semilla).shuffle(parte_desordenada)
+    cola_descendente = all(
+        parte_desordenada[indice] > parte_desordenada[indice + 1]
+        for indice in range(len(parte_desordenada) - 1)
+    )
+    if len(parte_desordenada) > 1 and cola_descendente:
+        parte_desordenada[0], parte_desordenada[-1] = (
+            parte_desordenada[-1],
+            parte_desordenada[0],
+        )
     return parte_ordenada + parte_desordenada
 
 

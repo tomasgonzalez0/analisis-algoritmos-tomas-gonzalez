@@ -23,7 +23,14 @@ GENERADORES: tuple[tuple[str, Callable[[int], list[int]]], ...] = (
 
 
 def medir_escenario(datos: list[int]) -> tuple[float, int]:
-    """Mide insertion sort y retorna la mediana en segundos y comparaciones."""
+    """Mide insertion sort y retorna la mediana y las comparaciones.
+
+    Args:
+        datos: lote que se ordenará en cada repetición.
+
+    Returns:
+        Tiempo mediano en segundos y número de comparaciones.
+    """
     tiempos = []
     comparaciones = 0
 
@@ -41,7 +48,11 @@ def medir_escenario(datos: list[int]) -> tuple[float, int]:
 
 
 def ejecutar_experimento() -> dict[str, list[tuple[int, float, int]]]:
-    """Ejecuta las mediciones de todos los tamaños y escenarios."""
+    """Ejecuta las mediciones de todos los tamaños y escenarios.
+
+    Returns:
+        Mediciones agrupadas por nombre de escenario.
+    """
     resultados = {nombre: [] for nombre, _ in GENERADORES}
 
     for tamano in TAMANOS:
@@ -54,7 +65,11 @@ def ejecutar_experimento() -> dict[str, list[tuple[int, float, int]]]:
 
 
 def graficar(resultados: dict[str, list[tuple[int, float, int]]]) -> None:
-    """Genera las gráficas de comparaciones y tiempo de la Parte 3."""
+    """Genera las gráficas de comparaciones y tiempo de la Parte 3.
+
+    Args:
+        resultados: mediciones agrupadas por escenario.
+    """
     carpeta = Path(__file__).resolve().parent / "graficas"
     carpeta.mkdir(exist_ok=True)
 
@@ -90,7 +105,11 @@ def graficar(resultados: dict[str, list[tuple[int, float, int]]]) -> None:
 def mostrar_resultados(
     resultados: dict[str, list[tuple[int, float, int]]],
 ) -> None:
-    """Muestra una tabla de mediciones en la terminal."""
+    """Muestra una tabla de mediciones en la terminal.
+
+    Args:
+        resultados: mediciones agrupadas por escenario.
+    """
     print("escenario;tamaño;tiempo_ms;comparaciones")
     for escenario, mediciones in resultados.items():
         for tamano, tiempo, comparaciones in mediciones:
