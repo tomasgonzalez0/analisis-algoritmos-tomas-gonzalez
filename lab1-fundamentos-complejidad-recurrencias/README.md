@@ -110,7 +110,60 @@ que C.
 
 ### Resultados experimentales
 
-Los resultados se incorporan después de ejecutar las mediciones.
+Se usaron tamaños de 100, 200, 400, 800, 1600, 3200 y 6400. Para
+cada combinación se generó primero el lote y luego se midieron únicamente tres
+llamadas a `insertion_sort` con `time.perf_counter()`. La tabla y la gráfica de
+tiempo usan la mediana de esas tres ejecuciones para reducir el ruido del
+sistema operativo. El conteo de comparaciones es determinista para cada lote.
+
+La situación describe riesgos enteros entre 0 y 1000, pero no pueden existir
+6400 valores enteros distintos en ese rango. Para mantener la exigencia de
+valores únicos se usaron identificadores enteros de `0` a `n - 1`. Sus
+magnitudes no representan riesgos clínicos reales; solo conservan el orden
+relativo necesario para estudiar los algoritmos.
+
+Comparaciones entre elementos:
+
+| Tamaño | A: aleatorio | B: casi ordenado | C: inverso |
+|---:|---:|---:|---:|
+| 100 | 2.542 | 99 | 4.950 |
+| 200 | 9.970 | 201 | 19.900 |
+| 400 | 40.436 | 409 | 79.800 |
+| 800 | 160.484 | 852 | 319.600 |
+| 1600 | 648.481 | 1.843 | 1.279.200 |
+| 3200 | 2.533.103 | 4.242 | 5.118.400 |
+| 6400 | 10.276.753 | 10.649 | 20.476.800 |
+
+![Comparaciones de insertion sort](graficas/parte3_comparaciones.png)
+
+Tiempo mediano en milisegundos:
+
+| Tamaño | A: aleatorio | B: casi ordenado | C: inverso |
+|---:|---:|---:|---:|
+| 100 | 0,2607 | 0,0122 | 0,5187 |
+| 200 | 0,6434 | 0,0135 | 1,1759 |
+| 400 | 2,4907 | 0,0426 | 5,0540 |
+| 800 | 20,0814 | 0,0663 | 20,1729 |
+| 1600 | 43,3196 | 0,1433 | 82,5700 |
+| 3200 | 172,0780 | 0,3270 | 335,5795 |
+| 6400 | 686,6734 | 0,8218 | 1.362,2286 |
+
+![Tiempo de insertion sort](graficas/parte3_tiempo.png)
+
+### Contraste con la predicción
+
+El escenario C fue el peor: con 6400 registros alcanzó 20.476.800
+comparaciones y 1.362,2286 ms. Corresponde exactamente a
+`n(n - 1) / 2`, porque cada elemento nuevo debe atravesar toda la parte ya
+procesada. El escenario B fue el mejor, con 10.649 comparaciones y 0,8218 ms
+para el mismo tamaño; su prefijo descendente casi no requiere movimientos y el
+trabajo adicional se concentra en la cola del 2 %.
+
+El escenario A quedó entre ambos y se aproxima al caso promedio. En `n=6400`
+realizó 10.276.753 comparaciones, cerca de la mitad del escenario C, y tardó
+686,6734 ms. La clasificación observada coincide con la predicción previa: B
+se acerca al mejor caso, A al promedio y C representa el peor caso para el
+orden descendente elegido.
 
 ## Parte 4 - Complejidad y validación
 
