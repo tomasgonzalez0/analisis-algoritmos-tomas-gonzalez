@@ -261,5 +261,59 @@ prefijo por cada clave; la suma sigue siendo cuadrática y da `Θ(n²)`.
 
 ### Validación experimental
 
-La comparación medida entre ambos algoritmos se presenta en el siguiente
-avance.
+Se generó una sola entrada aleatoria por tamaño y ambos algoritmos recibieron
+ese mismo lote sin modificarlo. Cada algoritmo se ejecutó tres veces y se tomó
+la mediana de `time.perf_counter()`, midiendo solo el ordenamiento.
+
+| Tamaño | Insertion sort (ms) | Merge sort (ms) |
+|---:|---:|---:|
+| 100 | 0,1500 | 0,0987 |
+| 200 | 0,6018 | 0,2023 |
+| 400 | 2,5866 | 0,4683 |
+| 800 | 10,2765 | 1,0677 |
+| 1600 | 43,0312 | 2,1515 |
+| 3200 | 166,5038 | 4,6276 |
+| 6400 | 691,4575 | 10,2245 |
+
+![Tiempo de insertion sort y merge sort](graficas/parte4_tiempo.png)
+
+La curva de insertion sort se hace cada vez más inclinada. Cuando `n` se
+duplica, su tiempo tiende a acercarse a cuatro veces el anterior, como se
+espera de `Θ(n²)`. Merge sort crece con mucha más suavidad, de acuerdo con
+`Θ(n log n)`. En 100 registros los tiempos todavía están cercanos porque merge
+sort paga llamadas recursivas y creación de listas, aunque en esta ejecución ya
+fue más rápido. En 6400 registros, insertion sort necesitó 691,4575 ms y merge
+sort 10,2245 ms, una ventaja aproximada de 67,6 veces para merge sort. La forma
+de ambas curvas coincide con las cotas calculadas y muestra que merge sort
+escala mejor para Tamiza.
+
+### Extrapolación a 1.200.000 registros
+
+La extrapolación parte de la medición aleatoria de `n0 = 6400`, la mayor del
+experimento. No se ejecutaron 1.200.000 registros. Para insertion sort se usó
+el modelo cuadrático y su tiempo real `t0 = 0,6914575 s`:
+
+```text
+t = 0,6914575 * (1.200.000 / 6.400)^2
+t = 24.309,0527 s = 405,1509 min = 6,7525 h
+```
+
+Para merge sort se usó su tiempo real `t0 = 0,0102245 s` y el crecimiento
+`n log2(n)`:
+
+```text
+t = 0,0102245 *
+    (1.200.000 * log2(1.200.000)) / (6.400 * log2(6.400))
+t = 3,0620 s = 0,0510 min
+```
+
+Estas cifras son **estimaciones**, no mediciones directas. Suponen que las
+constantes de esta implementación y este equipo se mantienen, que la entrada
+se comporta como el escenario aleatorio y que no intervienen lectura de disco,
+base de datos, red ni otros procesos. Con esos supuestos, insertion sort supera
+la ventana de cuatro horas, mientras merge sort queda ampliamente por debajo.
+
+### Concepto técnico para la Secretaría de Salud
+
+El concepto final se presenta después de consolidar la revisión técnica del
+informe.
