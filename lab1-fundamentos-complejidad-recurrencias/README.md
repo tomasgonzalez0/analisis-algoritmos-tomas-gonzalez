@@ -167,5 +167,99 @@ orden descendente elegido.
 
 ## Parte 4 - Complejidad y validación
 
-El desarrollo teórico y la comparación experimental se incorporan en los
-siguientes avances del laboratorio.
+[Código de la Parte 4](parte4_complejidad.py) | [Algoritmos](algoritmos.py) |
+[Generadores de datos](datos.py)
+
+### Recurrencia de merge sort
+
+Merge sort divide una entrada de tamaño `n` en dos partes, ordena cada una y
+las combina. Su recurrencia es:
+
+```text
+T(n) = 2T(n/2) + Θ(n)
+```
+
+El `2` aparece porque se resuelven dos subproblemas. Cada uno recibe `n/2`
+elementos. Finalmente, `Θ(n)` corresponde a la mezcla: para producir una sola
+lista descendente hay que recorrer los elementos de ambas mitades.
+
+### Resolución por método maestro
+
+Para la forma `T(n) = aT(n/b) + f(n)` se obtiene:
+
+```text
+a = 2
+b = 2
+f(n) = Θ(n)
+
+n^(log_b(a)) = n^(log_2(2)) = n
+```
+
+Por tanto, `f(n) = Θ(n)` tiene el mismo orden que
+`n^(log_b(a)) = n`. Se cumple la condición del caso 2 del método maestro:
+`f(n) = Θ(n^(log_b(a)) log^0(n))`. Al sumar un factor logarítmico, el
+resultado es:
+
+```text
+T(n) = Θ(n^(log_2(2)) log(n))
+T(n) = Θ(n log n)
+```
+
+### Análisis línea a línea de insertion sort
+
+El análisis corresponde a las operaciones de `insertion_sort` en
+[`algoritmos.py`](algoritmos.py). Para la iteración externa `i`, sea `t_i` el
+número de comparaciones entre elementos y `s_i` el número de desplazamientos.
+También sea `b_i` igual a 1 cuando esa iteración termina con `break` y 0 cuando
+termina porque `posicion` llega a -1.
+
+| Operación real | Costo | Veces que se ejecuta |
+|---|---:|---:|
+| `ordenados = datos.copy()` | `c1` por elemento | `n` |
+| `comparaciones = 0` | `c2` | `1` |
+| control de `for indice in range(...)` | `c3` | `n` |
+| `clave = ordenados[indice]` | `c4` | `n - 1` |
+| `posicion = indice - 1` | `c5` | `n - 1` |
+| comprobación `posicion >= 0` | `c6` | como máximo `Σ(t_i + 1)` |
+| `comparaciones += 1` | `c7` | `Σt_i` |
+| comparación `ordenados[posicion] >= clave` | `c8` | `Σt_i` |
+| `break` | `c9` | `Σb_i` |
+| desplazamiento de un elemento | `c10` | `Σs_i` |
+| `posicion -= 1` | `c11` | `Σs_i` |
+| inserción `ordenados[posicion + 1] = clave` | `c12` | `n - 1` |
+| `return ordenados, comparaciones` | `c13` | `1` |
+
+Una expresión que reúne esos costos es:
+
+```text
+T(n) = c1*n + c2 + c3*n + (c4+c5+c12)(n-1)
+     + c6*Σ(t_i+1) + (c7+c8)*Σt_i
+     + c9*Σb_i + (c10+c11)*Σs_i + c13
+```
+
+En el peor caso, la entrada viene ascendente y se necesita el resultado
+descendente. En la iteración `i`, la clave se compara y se desplaza frente a
+los `i` elementos anteriores: `t_i = s_i = i`. Así aparece la suma:
+
+```text
+1 + 2 + ... + (n - 1) = n(n - 1) / 2
+```
+
+Ese término cuadrático domina los costos lineales, por lo que el peor caso es
+`Θ(n²)`. En el mejor caso la entrada ya está descendente: se hace una
+comparación entre elementos por iteración, no hay desplazamientos y
+`Σt_i = n - 1`. Incluso contando la copia inicial, el costo total es `Θ(n)`.
+En una permutación aleatoria se desplaza en promedio una fracción lineal del
+prefijo por cada clave; la suma sigue siendo cuadrática y da `Θ(n²)`.
+
+### Tabla de complejidades
+
+| Algoritmo | Mejor caso | Caso promedio | Peor caso |
+|---|---:|---:|---:|
+| Insertion sort | `Θ(n)` | `Θ(n²)` | `Θ(n²)` |
+| Merge sort | `Θ(n log n)` | `Θ(n log n)` | `Θ(n log n)` |
+
+### Validación experimental
+
+La comparación medida entre ambos algoritmos se presenta en el siguiente
+avance.
