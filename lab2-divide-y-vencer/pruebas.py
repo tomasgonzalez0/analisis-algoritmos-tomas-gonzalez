@@ -11,7 +11,7 @@ def verificar_resultado(
     """Comprueba que los índices y la suma de un resultado sean coherentes."""
     inicio, fin, suma = resultado
     assert 0 <= inicio <= fin < len(valores)
-    assert abs(sum(valores[inicio : fin + 1]) - suma) < 1e-9
+    assert abs(sum(valores[inicio:fin + 1]) - suma) < 1e-9
 
 
 def comparar_algoritmos(valores: list[float], suma_esperada: float) -> None:
