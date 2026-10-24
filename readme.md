@@ -35,15 +35,13 @@ git push
 
 Los informes evaluativos serán almacenados dentro de la carpeta `laboratorios/`, utilizando una carpeta independiente para cada entrega.
 
-Ejemplo:
+Laboratorios entregados hasta el momento:
 
 ```text
 laboratorios/
-├── laboratorio-01/
-├── laboratorio-02/
-├── laboratorio-03/
-├── laboratorio-04/
-└── laboratorio-05/
+├── lab1-fundamentos-complejidad-recurrencias/
+├── lab2-divide-y-vencer/
+└── lab3-estructuras-datos/
 ```
 
 ## Autor

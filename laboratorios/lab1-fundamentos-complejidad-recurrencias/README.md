@@ -10,7 +10,7 @@ Desde la raíz del repositorio, en PowerShell:
 Set-ExecutionPolicy -Scope Process Bypass
 .\venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-cd lab1-fundamentos-complejidad-recurrencias
+cd laboratorios/lab1-fundamentos-complejidad-recurrencias
 python parte3_casos.py
 python parte4_complejidad.py
 ```

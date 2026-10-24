@@ -9,7 +9,7 @@ Desde la raíz del repositorio, en PowerShell:
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .\venv\Scripts\Activate.ps1
-cd lab2-divide-y-vencer
+cd laboratorios/lab2-divide-y-vencer
 python pruebas.py
 python medicion.py
 ```

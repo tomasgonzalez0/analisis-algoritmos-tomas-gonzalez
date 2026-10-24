@@ -9,7 +9,7 @@ Desde la raíz del repositorio, en PowerShell:
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass
 .\venv\Scripts\Activate.ps1
-cd lab3-estructuras-datos
+cd laboratorios/lab3-estructuras-datos
 python pruebas.py
 python medicion.py
 ```
