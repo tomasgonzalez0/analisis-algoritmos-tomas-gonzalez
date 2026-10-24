@@ -28,6 +28,9 @@ método de la división. Las pruebas cubren búsquedas exitosas y fallidas,
 tamaños, estados y la colisión de 10, 24 y 17 en la casilla 3 cuando `m=7`.
 También verifican el factor de carga `3/7` y comparan ambas estructuras en 30
 colecciones aleatorias reproducibles, con claves existentes e inexistentes.
+Todas las pruebas finalizaron sin errores. La implementación no usa las
+estructuras hash incorporadas de Python y cada búsqueda de la tabla recorre
+únicamente la cadena de la casilla calculada.
 
 ## Parte 2 - Medición y gráficas
 
