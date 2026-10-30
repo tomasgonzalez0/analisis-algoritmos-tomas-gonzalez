@@ -1,63 +1,57 @@
 # Retroalimentación — Laboratorio 02: Dividir y vencer
 
 **Estudiante:** Tomás González Zapata · **Laboratorio:** Laboratorio evaluativo 02 — Dividir y vencer
-**Fecha límite:** 2026-10-21 23:59 · **Versión revisada:** commit `760f8a4`
+**Fecha límite:** 2026-10-30 23:59 · **Versión revisada:** commit `7c440fc`
 
-Excelente trabajo, muy completo y ordenado.
+Muy buen trabajo: el laboratorio está completo, ordenado y bien sustentado con sus propias mediciones.
 
 ## Nota
 
 | Criterio | Puntos |
 |---|---|
-| Corrección conceptual | 19 / 20 |
+| Corrección conceptual | 18 / 20 |
 | Calidad de la explicación teórica | 20 / 20 |
 | Corrección de la implementación | 25 / 25 |
-| Calidad del análisis de las gráficas | 22 / 25 |
+| Calidad del análisis de las gráficas | 23 / 25 |
 | Documentación y organización del informe | 10 / 10 |
 | **Total** | **96 / 100** |
 | **Nota (0–5)** | **4.80** |
 
-## 1. Corrección conceptual (19 / 20)
+## 1. Corrección conceptual (18 / 20)
 **Lo que hizo bien:**
-- Identifica que divide y vencerás empieza a ganar entre 10 y 50 registros y explica por qué al inicio pierde.
-- Compara bien con el máximo de un arreglo: combinar cuesta `Θ(1)`, la recurrencia da `Θ(n)` y dividir no mejora nada.
-- Recomienda divide y vencerás y declara que las cifras a 1.000.000 de registros son estimaciones, con su razonamiento.
+- Identificó con sus datos el tamaño donde divide y vencerás empieza a ganar (entre 10 y 50 registros) y explicó por qué pierde en tamaños muy pequeños.
+- Comparó correctamente con hallar el máximo de un arreglo: combinar cuesta poco, pero igual hay que mirar todos los elementos, así que dividir no mejora el orden.
+- Recomendó un algoritmo y declaró que las cifras para 1.000.000 de registros son estimaciones, con el razonamiento detrás.
 
-**Lo que puede mejorar:**
-- Al estimar la fuerza bruta, dos puntos de partida dan 10,6 y 6,8 horas. Convendría decir cuál usaría como referencia y por qué.
+**Lo que puede mejorar (y cómo corregirlo):**
+- La estimación de fuerza bruta cambia mucho según el tamaño base (más de 10 horas contra menos de 7), y no explica bien a qué se debe esa diferencia.
+  → *Cómo corregirlo:* revise qué pasó con el tiempo medido en los tamaños que usó como base y diga cuál de las dos bases le parece más confiable y por qué.
 
 ## 2. Calidad de la explicación teórica (20 / 20)
 **Lo que hizo bien:**
-- Explica de dónde sale cada término de `T(n) = 2T(n/2) + Θ(n)`.
-- Resuelve con el método maestro y verifica la condición del caso 2.
-- Justifica el `Θ(n²)` de la fuerza bruta sumando `n + (n-1) + ... + 1`.
+- Planteó la recurrencia explicando cada término (dos mitades y un caso cruzado lineal) y la resolvió con el método maestro verificando la condición del caso 2.
+- Justificó el `Θ(n²)` de la fuerza bruta con la suma de los ciclos.
 
 ## 3. Corrección de la implementación (25 / 25)
 **Lo que hizo bien:**
-- Las tres funciones dan la suma correcta en todos los casos pedidos y no modifican la lista recibida.
-- `subarreglo_maximo` resuelve los tres casos sin usar la fuerza bruta.
-- `pruebas.py` cubre los casos pedidos y 40 listas aleatorias.
-- El código tiene type hints, docstrings y cumple PEP 8.
+- Las tres funciones resuelven bien todos los casos pedidos (serie de ocho días, un elemento, todos negativos, todos positivos y un caso cruzado) y coinciden en 40 listas aleatorias.
+- `subarreglo_maximo` resuelve los tres casos sin usar la fuerza bruta y ninguna función modifica la lista recibida.
+- Tiene *type hints*, *docstrings* con `Args` y `Returns` y el formato de líneas en blanco pedido.
 
-## 4. Calidad del análisis de las gráficas (22 / 25)
+## 4. Calidad del análisis de las gráficas (23 / 25)
 **Lo que hizo bien:**
-- La gráfica tiene título, ejes rotulados, leyenda, ambas curvas y nueve tamaños; la vista logarítmica ayuda a ver los tamaños pequeños.
-- Los valores de la tabla coinciden con la gráfica publicada.
-- Calcula el factor al duplicar de 1000 a 2000 para ambos algoritmos (4,25 y 2,19) y lo contrasta con lo esperado.
+- La gráfica tiene ambas curvas en los mismos ejes, título, ejes rotulados y leyenda, con nueve tamaños, y los valores del informe coinciden con lo que se ve (por ejemplo, fuerza bruta cerca de 1600 ms y divide y vencerás cerca de 9 ms en n = 8000).
+- Calculó el factor al duplicar de 1000 a 2000 para ambos algoritmos y lo contrastó con lo esperado.
 
-**Lo que puede mejorar:**
-- Entre 2000 y 4000 la fuerza bruta se multiplicó por cerca de 6,5, y no lo comenta. Solo menciona el 2,58 de 4000 a 8000 como ruido.
-- Falta el factor de divide y vencerás en el segundo par de tamaños.
+**Lo que puede mejorar (y cómo corregirlo):**
+- Algunos saltos de la curva de fuerza bruta no se parecen a un factor de 4 (por ejemplo, entre 4000 y 8000 y entre 500 y 1000), y lo atribuye al ruido sin mirar otros pares de tamaños.
+  → *Cómo corregirlo:* calcule el factor en otro par consecutivo que se duplique y diga si el patrón general sí se mantiene.
 
 ## 5. Documentación y organización del informe (10 / 10)
 **Lo que hizo bien:**
-- Estructura de carpetas correcta, informe en el orden pedido, gráfica visible y enlaces a cada código.
-- Instrucciones de reproducción claras y cinco commits descriptivos.
+- El laboratorio está en una ubicación válida (`laboratorios/lab2-divide-y-vencer/`) con todos los archivos del entregable.
+- El informe sigue el orden pedido, incrusta la gráfica con ruta que funciona, enlaza el código de cada parte e incluye instrucciones para reproducir.
+- Hay varios commits con mensajes descriptivos.
 
 ## ¿El código funciona?
-Sí. Las pruebas pasan, las dos soluciones coinciden con una comprobación propia en listas aleatorias y la medición genera la gráfica sin errores.
-
-## Para el próximo laboratorio
-- Analice todos los pares de tamaños consecutivos, también los que no se ven como espera, y explique las causas.
-- Elija un solo punto de referencia para las estimaciones y justifique la elección.
-- Mantenga la costumbre de repetir las mediciones y de verificar los resultados.
+Sí. Las pruebas pasan sin errores y la medición corre completa, imprime los tiempos y genera la gráfica.
